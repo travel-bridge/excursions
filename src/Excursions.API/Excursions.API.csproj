@@ -16,46 +16,4 @@
       <ProjectReference Include="..\Excursions.Infrastructure\Excursions.Infrastructure.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <EmbeddedResource Update="Resources\Validation.ru-RU.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>Validation.ru-RU.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
-      <EmbeddedResource Update="Resources\Validation.en-US.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>Validation.en-US.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
-      <EmbeddedResource Update="Resources\Domain.en-US.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>Domain.en-US.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
-      <EmbeddedResource Update="Resources\Domain.ru-RU.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>Domain.ru-RU.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="Resources\Validation.ru-RU.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>Localization.ru-RU.resx</DependentUpon>
-      </Compile>
-      <Compile Update="Resources\Validation.en-US.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>Localization.en-US.resx</DependentUpon>
-      </Compile>
-      <Compile Update="Resources\Domain.en-US.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>Domain.en-US.resx</DependentUpon>
-      </Compile>
-      <Compile Update="Resources\Domain.ru-RU.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>Domain.ru-RU.resx</DependentUpon>
-      </Compile>
-    </ItemGroup>
-
 </Project>
