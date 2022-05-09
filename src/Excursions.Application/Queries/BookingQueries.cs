@@ -1,4 +1,5 @@
 using Excursions.Application.Responses;
+using Excursions.Domain.Aggregates.ExcursionAggregate;
 using Npgsql;
 using SqlKata.Compilers;
 using SqlKata.Execution;
@@ -45,5 +46,25 @@ public class BookingQueries : IBookingQueries
         var total = await totalQuery.CountAsync<int>();
         var response = new PageableResponse<BookingResponse>{ Collection = booking, Total = total };
         return response;
+    }
+
+    public async Task<BookingToRejectResponse?> GetFirstToRejectAsync(
+        BookingStatus status,
+        DateTime dateTimeUtc)
+    {
+        await using var connection = new NpgsqlConnection(_connectionString);
+        var compiler = new PostgresCompiler();
+        var queryFactory = new QueryFactory(connection, compiler);
+
+        var bookingQuery = queryFactory
+            .Query("excursion.Booking as b")
+            .Select(
+                "b.ExcursionId",
+                "b.TouristId")
+            .Where("b.CreateDateTimeUtc", "<=", dateTimeUtc)
+            .Where("b.Status", "=", status.ToString());
+
+        var booking = await bookingQuery.FirstOrDefaultAsync<BookingToRejectResponse>();
+        return booking;
     }
 }

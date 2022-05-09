@@ -100,6 +100,9 @@ public class Excursion : EntityBase<int>, IAggregateRoot
     {
         if (Status != ExcursionStatus.Published)
             throw new DomainException("Domain:ExcursionBookWhenNotPublishedError");
+
+        if (Booking.Any(x => x.TouristId == touristId))
+            throw new DomainException("Domain:ExcursionBookWhenTouristAlreadyBookedError");
         
         if (_booking.Count >= PlacesCount)
             throw new DomainException("Domain:ExcursionBookPlacesCountLimitError");

@@ -140,5 +140,11 @@ namespace Excursions.Api.Resources {
                 return ResourceManager.GetString("Validation:ExcursionPricePerPlaceGreaterThanError", resourceCulture);
             }
         }
+        
+        internal static string Domain_ExcursionBookWhenTouristAlreadyBookedError {
+            get {
+                return ResourceManager.GetString("Domain:ExcursionBookWhenTouristAlreadyBookedError", resourceCulture);
+            }
+        }
     }
 }

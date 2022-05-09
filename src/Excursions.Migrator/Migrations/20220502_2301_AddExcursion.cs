@@ -23,5 +23,7 @@ public class AddExcursion : MigrationBase
                 table.WithColumn("CreateDateTimeUtc").AsDateTime().NotNullable();
                 table.WithColumn("UpdateDateTimeUtc").AsDateTime().Nullable();
             });
+        
+        // TODO: Продумать индексы
     }
 }

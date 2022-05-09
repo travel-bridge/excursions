@@ -66,4 +66,7 @@
     <data name="Validation:ExcursionPricePerPlaceGreaterThanError" xml:space="preserve">
         <value>Excursion price per place should be greater than 0.</value>
     </data>
+    <data name="Domain:ExcursionBookWhenTouristAlreadyBookedError" xml:space="preserve">
+        <value>Excursion can be booked only once.</value>
+    </data>
 </root>

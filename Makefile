@@ -10,6 +10,9 @@ build:
 	@echo build services:
 	docker build . --rm  --tag ${REGISTRY}/excursions_services:$(BUILD_NUMBER) --target services --build-arg revision='${REVISION}'
 
+	@echo build worker:
+	docker build . --rm  --tag ${REGISTRY}/excursions_worker:$(BUILD_NUMBER) --target worker --build-arg revision='${REVISION}'
+
 	@echo build migrator:
 	docker build . --rm  --tag ${REGISTRY}/excursions_migrator:$(BUILD_NUMBER) --target migrator --build-arg revision='${REVISION}'
 

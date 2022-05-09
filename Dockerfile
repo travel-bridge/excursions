@@ -9,6 +9,7 @@ RUN dotnet restore "Excursions.sln"
 COPY . .
 RUN dotnet build "Excursions.sln" -c Release --no-restore
 RUN dotnet publish "./src/Excursions.Services/Excursions.Services.csproj" -c Release --output /dist/services --no-restore
+RUN dotnet publish "./src/Excursions.Worker/Excursions.Worker.csproj" -c Release --output /dist/worker --no-restore
 RUN dotnet publish "./src/Excursions.Migrator/Excursions.Migrator.csproj" -c Release --output /dist/migrator --no-restore
 
 ### tests image
@@ -23,6 +24,13 @@ WORKDIR /app
 COPY --from=build /dist/services ./
 ARG revision=Unknown
 ENTRYPOINT [ "dotnet", "Excursions.Services.dll" ]
+
+### worker image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS worker
+WORKDIR /app
+COPY --from=build /dist/worker ./
+ARG revision=Unknown
+ENTRYPOINT [ "dotnet", "Excursions.Worker.dll" ]
 
 ### migrator image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS migrator

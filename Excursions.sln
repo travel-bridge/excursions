@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excursions.Migrator", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excursions.Services", "src\Excursions.Services\Excursions.Services.csproj", "{CC3F1847-A696-46CE-8A7C-EB42E09BC794}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excursions.Worker", "src\Excursions.Worker\Excursions.Worker.csproj", "{F64B56AE-2D41-4BD5-9D92-5128C5C60DE9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{CC3F1847-A696-46CE-8A7C-EB42E09BC794}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC3F1847-A696-46CE-8A7C-EB42E09BC794}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC3F1847-A696-46CE-8A7C-EB42E09BC794}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F64B56AE-2D41-4BD5-9D92-5128C5C60DE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F64B56AE-2D41-4BD5-9D92-5128C5C60DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F64B56AE-2D41-4BD5-9D92-5128C5C60DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F64B56AE-2D41-4BD5-9D92-5128C5C60DE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
