@@ -7,8 +7,8 @@ TEST_NETWORK?=host
 TEST_ENVIRONMENT?=docker
 
 build:
-	@echo build api:
-	docker build . --rm  --tag ${REGISTRY}/excursions_api:$(BUILD_NUMBER) --target api --build-arg revision='${REVISION}'
+	@echo build services:
+	docker build . --rm  --tag ${REGISTRY}/excursions_services:$(BUILD_NUMBER) --target services --build-arg revision='${REVISION}'
 
 	@echo build migrator:
 	docker build . --rm  --tag ${REGISTRY}/excursions_migrator:$(BUILD_NUMBER) --target migrator --build-arg revision='${REVISION}'

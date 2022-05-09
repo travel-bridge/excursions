@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excursions.Application", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excursions.Migrator", "src\Excursions.Migrator\Excursions.Migrator.csproj", "{C8E89630-7B17-4C40-905E-C4637D355361}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excursions.Api", "src\Excursions.Api\Excursions.Api.csproj", "{CC3F1847-A696-46CE-8A7C-EB42E09BC794}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excursions.Services", "src\Excursions.Services\Excursions.Services.csproj", "{CC3F1847-A696-46CE-8A7C-EB42E09BC794}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
