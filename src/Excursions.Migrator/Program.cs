@@ -2,7 +2,7 @@
 using FluentMigrator.Runner;
 using Microsoft.Extensions.DependencyInjection;
 
-var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__ClientAbDatabase")
+var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__ExcursionsDatabase")
     ?? throw new InvalidOperationException("Connection string is not configured.");
 
 var executingAssembly = Assembly.GetExecutingAssembly();
