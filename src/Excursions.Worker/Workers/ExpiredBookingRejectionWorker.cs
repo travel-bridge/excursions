@@ -1,13 +1,12 @@
 using Excursions.Application.Commands;
 using Excursions.Application.Queries;
 using Excursions.Application.Resources;
-using Excursions.Domain.Aggregates.ExcursionAggregate;
 using MediatR;
 using Microsoft.Extensions.Localization;
 
 namespace Excursions.Worker.Workers;
 
-public class BookingRejectionWorker : WorkerBase
+public class ExpiredBookingRejectionWorker : WorkerBase
 {
     private const int WorkerDelayMilliseconds = 300000;
     private const double BookingApproveLimitMinutes = 10;
@@ -15,11 +14,11 @@ public class BookingRejectionWorker : WorkerBase
     private readonly IBookingQueries _bookingQueries;
     private readonly IServiceScopeFactory _serviceScopeFactory;
 
-    public BookingRejectionWorker(
+    public ExpiredBookingRejectionWorker(
         IBookingQueries bookingQueries,
         IServiceScopeFactory serviceScopeFactory,
         IStringLocalizer<ExcursionResource> stringLocalizer,
-        ILogger<BookingRejectionWorker> logger)
+        ILogger<ExpiredBookingRejectionWorker> logger)
         : base(stringLocalizer, logger)
     {
         _bookingQueries = bookingQueries;
@@ -38,10 +37,8 @@ public class BookingRejectionWorker : WorkerBase
                 {
                     while (true)
                     {
-                        var booking = await _bookingQueries.GetFirstToRejectAsync(
-                            BookingStatus.Booked,
-                            DateTime.UtcNow.AddMinutes(-BookingApproveLimitMinutes));
-
+                        var expirationDateTimeUtc = DateTime.UtcNow.AddMinutes(-BookingApproveLimitMinutes);
+                        var booking = await _bookingQueries.GetFirstExpiredAsync(expirationDateTimeUtc);
                         if (booking == null)
                             break;
                         
@@ -51,7 +48,9 @@ public class BookingRejectionWorker : WorkerBase
                 },
                 stoppingToken);
 
-            await Task.Delay(WorkerDelayMilliseconds, stoppingToken);
+            await ExecuteSafelyAsync(
+                async () => await Task.Delay(WorkerDelayMilliseconds, stoppingToken),
+                stoppingToken);
         }
         while (!stoppingToken.IsCancellationRequested);
     }

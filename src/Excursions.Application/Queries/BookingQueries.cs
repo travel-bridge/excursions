@@ -48,9 +48,7 @@ public class BookingQueries : IBookingQueries
         return response;
     }
 
-    public async Task<BookingToRejectResponse?> GetFirstToRejectAsync(
-        BookingStatus status,
-        DateTime dateTimeUtc)
+    public async Task<BookingToRejectResponse?> GetFirstExpiredAsync(DateTime expirationDateTimeUtc)
     {
         await using var connection = new NpgsqlConnection(_connectionString);
         var compiler = new PostgresCompiler();
@@ -61,8 +59,8 @@ public class BookingQueries : IBookingQueries
             .Select(
                 "b.ExcursionId",
                 "b.TouristId")
-            .Where("b.CreateDateTimeUtc", "<=", dateTimeUtc)
-            .Where("b.Status", "=", status.ToString());
+            .Where("b.CreateDateTimeUtc", "<=", expirationDateTimeUtc)
+            .Where("b.Status", "=", BookingStatus.Booked);
 
         var booking = await bookingQuery.FirstOrDefaultAsync<BookingToRejectResponse>();
         return booking;
