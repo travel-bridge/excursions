@@ -1,7 +1,7 @@
 using Excursions.Domain.Exceptions;
 using FluentValidation;
 
-namespace Excursions.Domain.Aggregates.ExcursionAggregate;
+namespace Excursions.Domain.Aggregates.BookingAggregate;
 
 internal class BookingValidator : AbstractValidator<Booking>
 {

@@ -1,4 +1,5 @@
 using Excursions.Application.Responses;
+using Excursions.Domain.Aggregates.BookingAggregate;
 using Excursions.Domain.Aggregates.ExcursionAggregate;
 using Npgsql;
 using SqlKata.Compilers;

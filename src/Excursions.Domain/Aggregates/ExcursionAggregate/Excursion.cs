@@ -1,3 +1,4 @@
+using Excursions.Domain.Aggregates.BookingAggregate;
 using Excursions.Domain.Exceptions;
 
 namespace Excursions.Domain.Aggregates.ExcursionAggregate;
@@ -91,7 +92,7 @@ public class Excursion : EntityBase<int>, IAggregateRoot
     public void Publish()
     {
         if (Status != ExcursionStatus.Draft)
-            return;
+            throw new DomainException("Domain:ExcursionPublishWhenNotDraftError");
 
         Status = ExcursionStatus.Published;
     }
@@ -107,33 +108,7 @@ public class Excursion : EntityBase<int>, IAggregateRoot
         if (_booking.Count >= PlacesCount)
             throw new DomainException("Domain:ExcursionBookPlacesCountLimitError");
         
-        var booking = ExcursionAggregate.Booking.Create(touristId);
+        var booking = BookingAggregate.Booking.Create(Id, touristId);
         _booking.Add(booking);
-    }
-
-    public void ApproveBooking(string touristId)
-    {
-        if (Status != ExcursionStatus.Published)
-            throw new DomainException("Domain:ExcursionApproveBookingWhenNotPublishedError");
-        
-        var booking = _booking.FirstOrDefault(x => x.TouristId == touristId);
-        
-        if (booking is null)
-            throw new DomainException("Domain:ExcursionApproveBookingNotFoundError", touristId);
-        
-        booking.Approve();
-    }
-    
-    public void RejectBooking(string touristId)
-    {
-        if (Status != ExcursionStatus.Published)
-            throw new DomainException("Domain:ExcursionRejectBookingWhenNotPublishedError");
-        
-        var booking = _booking.FirstOrDefault(x => x.TouristId == touristId);
-        
-        if (booking is null)
-            throw new DomainException("Domain:ExcursionRejectBookingNotFoundError", touristId);
-        
-        booking.Reject();
     }
 }

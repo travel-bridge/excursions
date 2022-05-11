@@ -63,24 +63,6 @@ namespace Excursions.Api.Resources {
             }
         }
         
-        internal static string Domain_ExcursionApproveBookingWhenNotPublishedError {
-            get {
-                return ResourceManager.GetString("Domain:ExcursionApproveBookingWhenNotPublishedError", resourceCulture);
-            }
-        }
-        
-        internal static string Domain_ExcursionApproveBookingNotFoundError {
-            get {
-                return ResourceManager.GetString("Domain:ExcursionApproveBookingNotFoundError", resourceCulture);
-            }
-        }
-        
-        internal static string Domain_ExcursionRejectBookingWhenNotPublishedError {
-            get {
-                return ResourceManager.GetString("Domain:ExcursionRejectBookingWhenNotPublishedError", resourceCulture);
-            }
-        }
-        
         internal static string Domain_BookingApproveWhenNotBookedError {
             get {
                 return ResourceManager.GetString("Domain:BookingApproveWhenNotBookedError", resourceCulture);
@@ -90,12 +72,6 @@ namespace Excursions.Api.Resources {
         internal static string Domain_BookingRejectWhenNotBookedError {
             get {
                 return ResourceManager.GetString("Domain:BookingRejectWhenNotBookedError", resourceCulture);
-            }
-        }
-        
-        internal static string Domain_ExcursionRejectBookingNotFoundError {
-            get {
-                return ResourceManager.GetString("Domain:ExcursionRejectBookingNotFoundError", resourceCulture);
             }
         }
         
@@ -144,6 +120,12 @@ namespace Excursions.Api.Resources {
         internal static string Domain_ExcursionBookWhenTouristAlreadyBookedError {
             get {
                 return ResourceManager.GetString("Domain:ExcursionBookWhenTouristAlreadyBookedError", resourceCulture);
+            }
+        }
+        
+        internal static string Domain_ExcursionPublishWhenNotDraftError {
+            get {
+                return ResourceManager.GetString("Domain:ExcursionPublishWhenNotDraftError", resourceCulture);
             }
         }
     }

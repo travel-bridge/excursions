@@ -1,17 +1,20 @@
 using Excursions.Domain.Exceptions;
 
-namespace Excursions.Domain.Aggregates.ExcursionAggregate;
+namespace Excursions.Domain.Aggregates.BookingAggregate;
 
-public class Booking : EntityBase<int>
+public class Booking : EntityBase<int>, IAggregateRoot
 {
     private static readonly BookingValidator Validator = new();
     
-    protected Booking(string touristId)
+    protected Booking(int excursionId, string touristId)
     {
+        ExcursionId = excursionId;
         TouristId = touristId;
         Status = BookingStatus.Booked;
         CreateDateTimeUtc = DateTime.UtcNow;
     }
+    
+    public int ExcursionId { get; private set; }
 
     public string TouristId { get; private set; }
     
@@ -20,12 +23,10 @@ public class Booking : EntityBase<int>
     public DateTime CreateDateTimeUtc { get; private set; }
 
     public DateTime? UpdateDateTimeUtc { get; private set; }
-    
-    public int ExcursionId { get; private set; }
 
-    public static Booking Create(string touristId)
+    public static Booking Create(int excursionId, string touristId)
     {
-        var booking = new Booking(touristId);
+        var booking = new Booking(excursionId, touristId);
         Validator.ValidateEntityAndThrow(booking);
         return booking;
     }

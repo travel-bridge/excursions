@@ -27,23 +27,11 @@
     <data name="Domain:ExcursionBookPlacesCountLimitError" xml:space="preserve">
         <value>Excursion can be booked when excursion has places left.</value>
     </data>
-    <data name="Domain:ExcursionApproveBookingWhenNotPublishedError" xml:space="preserve">
-        <value>Booking can be approved when excursion status is published.</value>
-    </data>
-    <data name="Domain:ExcursionApproveBookingNotFoundError" xml:space="preserve">
-        <value>Failed to approve booking for tourist with id {0}.</value>
-    </data>
-    <data name="Domain:ExcursionRejectBookingWhenNotPublishedError" xml:space="preserve">
-        <value>Booking can be rejected when excursion status is published.</value>
-    </data>
     <data name="Domain:BookingApproveWhenNotBookedError" xml:space="preserve">
         <value>Booking can be approved when status is booked.</value>
     </data>
     <data name="Domain:BookingRejectWhenNotBookedError" xml:space="preserve">
         <value>Booking can be rejected when status is booked.</value>
-    </data>
-    <data name="Domain:ExcursionRejectBookingNotFoundError" xml:space="preserve">
-        <value>Failed to reject booking for tourist with id {0}.</value>
     </data>
     <data name="Validation:ExcursionNameNotEmptyError" xml:space="preserve">
         <value>Excursion name should not be empty.</value>
@@ -68,5 +56,8 @@
     </data>
     <data name="Domain:ExcursionBookWhenTouristAlreadyBookedError" xml:space="preserve">
         <value>Excursion can be booked only once.</value>
+    </data>
+    <data name="Domain:ExcursionPublishWhenNotDraftError" xml:space="preserve">
+        <value>Excursion can be published only when status is draft.</value>
     </data>
 </root>

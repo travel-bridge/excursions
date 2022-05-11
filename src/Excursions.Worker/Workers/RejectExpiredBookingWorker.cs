@@ -1,27 +1,22 @@
 using Excursions.Application.Commands;
-using Excursions.Application.Queries;
 using Excursions.Application.Resources;
 using MediatR;
 using Microsoft.Extensions.Localization;
 
 namespace Excursions.Worker.Workers;
 
-public class ExpiredBookingRejectionWorker : WorkerBase
+public class RejectExpiredBookingWorker : WorkerBase
 {
     private const int WorkerDelayMilliseconds = 300000;
-    private const double BookingApproveLimitMinutes = 10;
-
-    private readonly IBookingQueries _bookingQueries;
+    
     private readonly IServiceScopeFactory _serviceScopeFactory;
 
-    public ExpiredBookingRejectionWorker(
-        IBookingQueries bookingQueries,
+    public RejectExpiredBookingWorker(
         IServiceScopeFactory serviceScopeFactory,
         IStringLocalizer<ExcursionResource> stringLocalizer,
-        ILogger<ExpiredBookingRejectionWorker> logger)
+        ILogger<RejectExpiredBookingWorker> logger)
         : base(stringLocalizer, logger)
     {
-        _bookingQueries = bookingQueries;
         _serviceScopeFactory = serviceScopeFactory;
     }
 
@@ -35,16 +30,14 @@ public class ExpiredBookingRejectionWorker : WorkerBase
             await ExecuteSafelyAsync(
                 async () =>
                 {
-                    while (true)
+                    bool isRejected;
+                    do
                     {
-                        var expirationDateTimeUtc = DateTime.UtcNow.AddMinutes(-BookingApproveLimitMinutes);
-                        var booking = await _bookingQueries.GetFirstExpiredAsync(expirationDateTimeUtc);
-                        if (booking == null)
-                            break;
-                        
-                        var command = new RejectBookingCommand(booking.ExcursionId, booking.TouristId);
-                        await mediator.Send(command, stoppingToken);
+                        var command = new RejectFirstExpiredBookingCommand();
+                        var response = await mediator.Send(command, stoppingToken);
+                        isRejected = response.IsSuccess;
                     }
+                    while (isRejected);
                 },
                 stoppingToken);
 

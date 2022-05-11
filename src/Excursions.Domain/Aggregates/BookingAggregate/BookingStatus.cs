@@ -1,4 +1,4 @@
-namespace Excursions.Domain.Aggregates.ExcursionAggregate;
+namespace Excursions.Domain.Aggregates.BookingAggregate;
 
 public enum BookingStatus
 {

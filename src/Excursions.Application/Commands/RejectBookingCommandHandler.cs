@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Excursions.Application.Commands;
 
-public record RejectBookingCommand(int ExcursionId, string TouristId) : IRequest<OperationResponse>;
+public record RejectBookingCommand(int Id) : IRequest<OperationResponse>;
 
 public class RejectBookingCommandHandler : IRequestHandler<RejectBookingCommand, OperationResponse>
 {
@@ -22,13 +22,13 @@ public class RejectBookingCommandHandler : IRequestHandler<RejectBookingCommand,
         return await _dataExecutionContext.ExecuteWithTransactionAsync(
             async repositories =>
             {
-                var excursion = await repositories.Excursion.GetByIdAsync(command.ExcursionId, cancellationToken);
-                if (excursion is null)
-                    throw new InvalidRequestException($"Excursion by {command.ExcursionId} id not found.");
+                var booking = await repositories.Booking.GetByIdAsync(command.Id, cancellationToken);
+                if (booking is null)
+                    throw new InvalidRequestException($"Booking by {command.Id} id not found.");
                 
-                excursion.RejectBooking(command.TouristId);
+                booking.Reject();
 
-                await repositories.Excursion.UpdateAsync(excursion, cancellationToken);
+                await repositories.Booking.UpdateAsync(booking, cancellationToken);
 
                 return new OperationResponse { IsSuccess = true };
             },

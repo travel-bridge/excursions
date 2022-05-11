@@ -1,3 +1,4 @@
+using Excursions.Domain.Aggregates.BookingAggregate;
 using Excursions.Domain.Aggregates.ExcursionAggregate;
 using Microsoft.EntityFrameworkCore;
 
