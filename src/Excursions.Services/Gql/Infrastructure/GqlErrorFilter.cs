@@ -29,6 +29,8 @@ public class GqlErrorFilter : IErrorFilter
         {
             case ValidationException validationException:
                 return GetValidationError(error, validationException, _stringLocalizer);
+            case DomainException domainException:
+                return GetBaseError(error, domainException, _stringLocalizer);
             case ExceptionBase exceptionBase:
                 _logger.LogError(exceptionBase, exceptionBase.Message);
                 return GetBaseError(error, exceptionBase, _stringLocalizer);
