@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Excursions.Api.Gql.Infrastructure;
+using Excursions.Api.Infrastructure;
 using Excursions.Application.Commands;
 using Excursions.Application.Requests;
 using Excursions.Application.Responses;
@@ -15,7 +16,7 @@ public class ExcursionMutation
         [Service] IMediator mediator,
         CreateExcursionRequest request)
     {
-        var guideId = claimsPrincipal.GetId();
+        var guideId = claimsPrincipal.GetUserId();
         var command = new CreateExcursionCommand(
             request.Name,
             request.Description,
@@ -33,7 +34,7 @@ public class ExcursionMutation
         [Service] IMediator mediator,
         UpdateExcursionRequest request)
     {
-        var guideId = claimsPrincipal.GetId();
+        var guideId = claimsPrincipal.GetUserId();
         var command = new UpdateExcursionCommand(
             request.Id,
             request.Name,
@@ -52,7 +53,7 @@ public class ExcursionMutation
         [Service] IMediator mediator,
         int id)
     {
-        var guideId = claimsPrincipal.GetId();
+        var guideId = claimsPrincipal.GetUserId();
         var command = new PublishExcursionCommand(id, guideId);
         var response = await mediator.Send(command);
         return response;
@@ -64,7 +65,7 @@ public class ExcursionMutation
         [Service] IMediator mediator,
         int id)
     {
-        var touristId = claimsPrincipal.GetId();
+        var touristId = claimsPrincipal.GetUserId();
         var command = new BookExcursionCommand(id, touristId);
         var response = await mediator.Send(command);
         return response;

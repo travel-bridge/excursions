@@ -10,7 +10,7 @@ public static class ServiceCollectionExtensions
     {
         services
             .AddGraphQLServer()
-            // .AddAuthorization()
+            .AddAuthorization()
             .AddQueryType<RootQuery>()
             .AddMutationType<RootMutation>();
 

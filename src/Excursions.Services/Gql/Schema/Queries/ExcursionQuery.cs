@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Excursions.Api.Gql.Infrastructure;
+using Excursions.Api.Infrastructure;
 using Excursions.Application.Queries;
 using Excursions.Application.Responses;
 
@@ -33,7 +34,7 @@ public class ExcursionQuery
         int skip = 0,
         int take = 20)
     {
-        var guideId = claimsPrincipal.GetId();
+        var guideId = claimsPrincipal.GetUserId();
         var response = await excursionQueries.GetByGuideIdAsync(guideId, skip, take);
         return response;
     }
