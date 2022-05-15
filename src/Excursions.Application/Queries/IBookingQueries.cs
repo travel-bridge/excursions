@@ -8,6 +8,4 @@ public interface IBookingQueries
         string touristId,
         int skip = 0,
         int take = 20);
-
-    Task<BookingToRejectResponse?> GetFirstExpiredAsync(DateTime expirationDateTimeUtc);
 }

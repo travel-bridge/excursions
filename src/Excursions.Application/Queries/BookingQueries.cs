@@ -48,22 +48,4 @@ public class BookingQueries : IBookingQueries
         var response = new PageableResponse<BookingResponse>{ Collection = booking, Total = total };
         return response;
     }
-
-    public async Task<BookingToRejectResponse?> GetFirstExpiredAsync(DateTime expirationDateTimeUtc)
-    {
-        await using var connection = new NpgsqlConnection(_connectionString);
-        var compiler = new PostgresCompiler();
-        var queryFactory = new QueryFactory(connection, compiler);
-
-        var bookingQuery = queryFactory
-            .Query("excursion.Booking as b")
-            .Select(
-                "b.ExcursionId",
-                "b.TouristId")
-            .Where("b.CreateDateTimeUtc", "<=", expirationDateTimeUtc)
-            .Where("b.Status", "=", BookingStatus.Booked);
-
-        var booking = await bookingQuery.FirstOrDefaultAsync<BookingToRejectResponse>();
-        return booking;
-    }
 }
