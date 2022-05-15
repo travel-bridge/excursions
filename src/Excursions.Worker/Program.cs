@@ -6,11 +6,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddHostedService<RejectExpiredBookingWorker>();
-// TODO: Add Health Checks
+builder.Services.AddHealthChecks()
+    .AddNpgSql(builder.Configuration.GetConnectionString("ExcursionsDatabase")
+        ?? throw new InvalidOperationException("Connection string is not configured."));
 
 var app = builder.Build();
 app.UseRouting();
 app.UseApplication();
-// TODO: Map Health Checks
+app.MapHealthChecks("/health");
 
 await app.RunAsync();

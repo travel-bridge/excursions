@@ -36,7 +36,9 @@ builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddCors();
 builder.Services.AddGql();
-// TODO: Add Health Checks
+builder.Services.AddHealthChecks()
+    .AddNpgSql(builder.Configuration.GetConnectionString("ExcursionsDatabase")
+        ?? throw new InvalidOperationException("Connection string is not configured."));
 
 var app = builder.Build();
 app.UseRouting();
@@ -45,6 +47,6 @@ app.UseAuthorization();
 app.UseApplication();
 app.UseCors(x=> x.SetIsOriginAllowed(_ => true).AllowCredentials().AllowAnyHeader().AllowAnyMethod());
 app.MapGraphQL().AllowAnonymous();
-// TODO: Map Health Checks
+app.MapHealthChecks("/health");
 
 await app.RunAsync();

@@ -11,4 +11,8 @@
       <ProjectReference Include="..\Excursions.Infrastructure\Excursions.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="6.0.2" />
+    </ItemGroup>
+
 </Project>
