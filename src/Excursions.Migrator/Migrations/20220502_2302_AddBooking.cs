@@ -45,7 +45,5 @@ public class AddBooking : MigrationBase
                 .OnColumn("TouristId").Ascending()
                 .WithOptions()
                 .NonClustered());
-        
-        // TODO: Продумать индексы
     }
 }

@@ -24,6 +24,13 @@ public class AddExcursion : MigrationBase
                 table.WithColumn("UpdateDateTimeUtc").AsDateTime().Nullable();
             });
         
-        // TODO: Продумать индексы
+        CreateIndexIfNotExists(
+            "excursion",
+            "Excursion",
+            "IX_Excursion_GuideId",
+            index => index
+                .OnColumn("GuideId").Ascending()
+                .WithOptions()
+                .NonClustered());
     }
 }
