@@ -45,5 +45,14 @@ public class AddBooking : MigrationBase
                 .OnColumn("TouristId").Ascending()
                 .WithOptions()
                 .NonClustered());
+        
+        CreateIndexIfNotExists(
+            "excursion",
+            "Booking",
+            "IX_Booking_CreateDateTimeUtc",
+            index => index
+                .OnColumn("CreateDateTimeUtc").Ascending()
+                .WithOptions()
+                .NonClustered());
     }
 }
