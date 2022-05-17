@@ -105,12 +105,6 @@ namespace Excursions.Api.Resources {
             }
         }
         
-        internal static string Validation_ExcursionPlacesCountLessThanOrEqualToError {
-            get {
-                return ResourceManager.GetString("Validation:ExcursionPlacesCountLessThanOrEqualToError", resourceCulture);
-            }
-        }
-        
         internal static string Validation_ExcursionPricePerPlaceGreaterThanError {
             get {
                 return ResourceManager.GetString("Validation:ExcursionPricePerPlaceGreaterThanError", resourceCulture);

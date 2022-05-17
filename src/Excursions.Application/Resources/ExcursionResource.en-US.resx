@@ -48,9 +48,6 @@
     <data name="Validation:ExcursionPlacesCountGreaterThanError" xml:space="preserve">
         <value>Excursion places count should be greater than 0.</value>
     </data>
-    <data name="Validation:ExcursionPlacesCountLessThanOrEqualToError" xml:space="preserve">
-        <value>Excursion places count should be less than or equal to 10.</value>
-    </data>
     <data name="Validation:ExcursionPricePerPlaceGreaterThanError" xml:space="preserve">
         <value>Excursion price per place should be greater than 0.</value>
     </data>

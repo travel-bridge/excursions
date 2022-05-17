@@ -39,11 +39,7 @@ internal class ExcursionValidator : AbstractValidator<Excursion>
             .GreaterThan(0)
             .WithState(_ => new ValidationMessage(
                 placesCountLocation,
-                "Validation:ExcursionPlacesCountGreaterThanError"))
-            .LessThanOrEqualTo(10)
-            .WithState(_ => new ValidationMessage(
-                placesCountLocation,
-                "Validation:ExcursionPlacesCountLessThanOrEqualToError"));
+                "Validation:ExcursionPlacesCountGreaterThanError"));
 
         var pricePerPlaceLocation = new List<string>(Location) { "pricePerPlace" };
         RuleFor(x => x.PricePerPlace)
