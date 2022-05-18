@@ -10,5 +10,5 @@ public class CreateExcursionRequest
 
     public int PlacesCount { get; init; }
 
-    public decimal PricePerPlace { get; init; }
+    public decimal? PricePerPlace { get; init; }
 }

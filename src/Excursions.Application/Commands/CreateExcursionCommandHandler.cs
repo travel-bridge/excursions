@@ -11,7 +11,7 @@ public record CreateExcursionCommand(
     string? Description,
     DateTime DateTimeUtc,
     int PlacesCount,
-    decimal PricePerPlace,
+    decimal? PricePerPlace,
     string GuideId) : IRequest<IdResponse>;
 
 public class CreateExcursionCommandHandler : IRequestHandler<CreateExcursionCommand, IdResponse>

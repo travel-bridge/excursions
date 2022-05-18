@@ -14,7 +14,7 @@ public class ExcursionResponse
 
     public int PlacesBooked { get; init; }
 
-    public decimal PricePerPlace { get; init; }
+    public decimal? PricePerPlace { get; init; }
 
     public string GuideId { get; init; } = null!;
 

@@ -12,7 +12,7 @@ public class Excursion : EntityBase<int>, IAggregateRoot
         string? description,
         DateTime dateTimeUtc,
         int placesCount,
-        decimal pricePerPlace,
+        decimal? pricePerPlace,
         string guideId)
     {
         Name = name;
@@ -33,7 +33,7 @@ public class Excursion : EntityBase<int>, IAggregateRoot
 
     public int PlacesCount { get; private set; }
 
-    public decimal PricePerPlace { get; private set; }
+    public decimal? PricePerPlace { get; private set; }
 
     public string GuideId { get; private set; }
     
@@ -46,12 +46,14 @@ public class Excursion : EntityBase<int>, IAggregateRoot
     private readonly List<Booking> _booking = new();
     public IReadOnlyCollection<Booking> Booking => _booking.AsReadOnly();
 
+    public bool IsFree() => PricePerPlace is null;
+    
     public static Excursion Create(
         string name,
         string? description,
         DateTime dateTimeUtc,
         int placesCount,
-        decimal pricePerPlace,
+        decimal? pricePerPlace,
         string guideId)
     {
         var excursion = new Excursion(name, description, dateTimeUtc, placesCount, pricePerPlace, guideId);
@@ -97,7 +99,7 @@ public class Excursion : EntityBase<int>, IAggregateRoot
         Status = ExcursionStatus.Published;
     }
     
-    public void Book(string touristId)
+    public Booking Book(string touristId)
     {
         if (Status != ExcursionStatus.Published)
             throw new DomainException("Domain:ExcursionBookWhenNotPublishedError");
@@ -110,5 +112,7 @@ public class Excursion : EntityBase<int>, IAggregateRoot
         
         var booking = BookingAggregate.Booking.Create(Id, touristId);
         _booking.Add(booking);
+
+        return booking;
     }
 }

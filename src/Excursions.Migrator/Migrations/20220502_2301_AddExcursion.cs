@@ -17,7 +17,7 @@ public class AddExcursion : MigrationBase
                 table.WithColumn("Description").AsString(512).Nullable();
                 table.WithColumn("DateTimeUtc").AsDateTime().NotNullable();
                 table.WithColumn("PlacesCount").AsInt32().NotNullable();
-                table.WithColumn("PricePerPlace").AsDecimal().NotNullable();
+                table.WithColumn("PricePerPlace").AsDecimal().Nullable();
                 table.WithColumn("GuideId").AsString(64).NotNullable();
                 table.WithColumn("Status").AsString(64).NotNullable();
                 table.WithColumn("CreateDateTimeUtc").AsDateTime().NotNullable();

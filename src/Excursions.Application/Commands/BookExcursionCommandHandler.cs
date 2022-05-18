@@ -26,7 +26,9 @@ public class BookExcursionCommandHandler : IRequestHandler<BookExcursionCommand,
                 if (excursion is null)
                     throw new InvalidRequestException($"Excursion by {command.Id} id not found.");
                 
-                excursion.Book(command.TouristId);
+                var booking = excursion.Book(command.TouristId);
+                if (excursion.IsFree())
+                    booking.Approve();
 
                 await repositories.Excursion.UpdateAsync(excursion, cancellationToken);
 
