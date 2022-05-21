@@ -5,5 +5,5 @@
 
 ## Create ``excursions-database`` database
 
-## Run Auth.Migrator with connection string
+## Run Excursions.Migrator with connection string
     User ID=postgres;Password=postgres;Host=localhost;Port=5432;Database=excursions-database;
