@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplication(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddHostedService<RejectExpiredBookingWorker>();
+builder.Services.AddHostedService<ApprovePaidBookingWorker>();
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("ExcursionsDatabase")
         ?? throw new InvalidOperationException("Connection string is not configured."));

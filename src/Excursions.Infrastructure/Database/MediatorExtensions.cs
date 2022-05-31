@@ -1,7 +1,7 @@
 using Excursions.Domain.Aggregates;
 using MediatR;
 
-namespace Excursions.Infrastructure;
+namespace Excursions.Infrastructure.Database;
 
 public static class MediatorExtensions
 {

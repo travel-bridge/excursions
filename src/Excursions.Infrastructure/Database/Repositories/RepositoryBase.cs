@@ -1,7 +1,7 @@
 using Excursions.Domain.Aggregates;
 using Microsoft.EntityFrameworkCore;
 
-namespace Excursions.Infrastructure.Repositories;
+namespace Excursions.Infrastructure.Database.Repositories;
 
 public abstract class RepositoryBase<TDbContext, TEntity, TIdentifier> : IRepository<TEntity>
     where TDbContext : DbContext

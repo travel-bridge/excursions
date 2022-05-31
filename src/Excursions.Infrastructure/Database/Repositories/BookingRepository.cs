@@ -1,7 +1,7 @@
 using Excursions.Domain.Aggregates.BookingAggregate;
 using Microsoft.EntityFrameworkCore;
 
-namespace Excursions.Infrastructure.Repositories;
+namespace Excursions.Infrastructure.Database.Repositories;
 
 public class BookingRepository : RepositoryBase<DataContext, Booking, int>, IBookingRepository
 {

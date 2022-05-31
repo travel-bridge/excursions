@@ -1,4 +1,5 @@
 using System.Data;
+using Excursions.Application.IntegrationEvents;
 using Excursions.Application.Responses;
 using Excursions.Domain.Aggregates;
 using Excursions.Domain.Exceptions;
@@ -11,10 +12,12 @@ public record BookExcursionCommand(int Id, string TouristId) : IRequest<Operatio
 public class BookExcursionCommandHandler : IRequestHandler<BookExcursionCommand, OperationResponse>
 {
     private readonly IDataExecutionContext _dataExecutionContext;
+    private readonly IEventProducer _eventProducer;
 
-    public BookExcursionCommandHandler(IDataExecutionContext dataExecutionContext)
+    public BookExcursionCommandHandler(IDataExecutionContext dataExecutionContext, IEventProducer eventProducer)
     {
         _dataExecutionContext = dataExecutionContext;
+        _eventProducer = eventProducer;
     }
     
     public async Task<OperationResponse> Handle(BookExcursionCommand command, CancellationToken cancellationToken)
@@ -32,6 +35,11 @@ public class BookExcursionCommandHandler : IRequestHandler<BookExcursionCommand,
 
                 await repositories.Excursion.UpdateAsync(excursion, cancellationToken);
 
+                if (!excursion.IsFree())
+                    await _eventProducer.ProduceAsync(
+                        new PaidExcursionBookedIntegrationEvent(booking.Id, booking.TouristId),
+                        cancellationToken);
+                
                 return new OperationResponse { IsSuccess = true };
             },
             IsolationLevel.Serializable,

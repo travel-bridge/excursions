@@ -1,9 +1,9 @@
 using Excursions.Domain.Aggregates;
 using Excursions.Domain.Aggregates.BookingAggregate;
 using Excursions.Domain.Aggregates.ExcursionAggregate;
-using Excursions.Infrastructure.Repositories;
+using Excursions.Infrastructure.Database.Repositories;
 
-namespace Excursions.Infrastructure;
+namespace Excursions.Infrastructure.Database;
 
 public class RepositoryRegistry : IRepositoryRegistry
 {

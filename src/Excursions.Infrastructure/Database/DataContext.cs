@@ -2,7 +2,7 @@ using Excursions.Domain.Aggregates.BookingAggregate;
 using Excursions.Domain.Aggregates.ExcursionAggregate;
 using Microsoft.EntityFrameworkCore;
 
-namespace Excursions.Infrastructure;
+namespace Excursions.Infrastructure.Database;
 
 public class DataContext : DbContext
 {

@@ -1,7 +1,7 @@
 using Excursions.Domain.Aggregates.ExcursionAggregate;
 using Microsoft.EntityFrameworkCore;
 
-namespace Excursions.Infrastructure.Repositories;
+namespace Excursions.Infrastructure.Database.Repositories;
 
 public class ExcursionRepository : RepositoryBase<DataContext, Excursion, int>, IExcursionRepository
 {

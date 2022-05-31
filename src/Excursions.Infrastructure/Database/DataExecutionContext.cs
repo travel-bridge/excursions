@@ -3,7 +3,7 @@ using Excursions.Domain.Aggregates;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Excursions.Infrastructure;
+namespace Excursions.Infrastructure.Database;
 
 public class DataExecutionContext : IDataExecutionContext
 {

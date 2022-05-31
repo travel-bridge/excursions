@@ -107,7 +107,7 @@ public class Excursion : EntityBase<int>, IAggregateRoot
         if (Booking.Any(x => x.TouristId == touristId))
             throw new DomainException("Domain:ExcursionBookWhenTouristAlreadyBookedError");
         
-        if (_booking.Count >= PlacesCount)
+        if (_booking.Count(x => x.Status != BookingStatus.Rejected) >= PlacesCount)
             throw new DomainException("Domain:ExcursionBookPlacesCountLimitError");
         
         var booking = BookingAggregate.Booking.Create(Id, touristId);
