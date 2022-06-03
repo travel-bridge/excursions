@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Excursions.Infrastructure.Database.Repositories;
 
-public abstract class RepositoryBase<TDbContext, TEntity, TIdentifier> : IRepository<TEntity>
+public abstract class RepositoryBase<TDbContext, TEntity, TId> : IRepository<TEntity, TId>
     where TDbContext : DbContext
-    where TEntity : EntityBase<TIdentifier>, IAggregateRoot
-    where TIdentifier : IEquatable<TIdentifier>
+    where TEntity : EntityBase<TId>, IAggregateRoot
+    where TId : IEquatable<TId>
 {
     protected RepositoryBase(TDbContext context)
     {
@@ -39,13 +39,13 @@ public abstract class RepositoryBase<TDbContext, TEntity, TIdentifier> : IReposi
         await Context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task DeleteByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task DeleteByIdAsync(TId id, CancellationToken cancellationToken = default)
     {
         var entity = await Set.FirstOrDefaultAsync(cancellationToken: cancellationToken);
         if (entity is not null)
             await DeleteAsync(entity, cancellationToken);
     }
 
-    public async Task<TEntity?> GetByIdAsync(int id, CancellationToken cancellationToken = default) =>
+    public async Task<TEntity?> GetByIdAsync(TId id, CancellationToken cancellationToken = default) =>
         await QuerySet.FirstOrDefaultAsync(x => x.Id.Equals(id), cancellationToken);
 }

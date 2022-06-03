@@ -1,5 +1,5 @@
 namespace Excursions.Domain.Aggregates.ExcursionAggregate;
 
-public interface IExcursionRepository : IRepository<Excursion>
+public interface IExcursionRepository : IRepository<Excursion, int>
 {
 }
