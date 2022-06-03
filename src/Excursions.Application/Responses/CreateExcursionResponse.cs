@@ -1,6 +1,6 @@
 namespace Excursions.Application.Responses;
 
-public class IdResponse
+public class CreateExcursionResponse
 {
     public int Id { get; init; }
 }

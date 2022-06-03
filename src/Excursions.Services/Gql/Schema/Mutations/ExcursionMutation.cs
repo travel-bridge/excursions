@@ -11,7 +11,7 @@ namespace Excursions.Api.Gql.Schema.Mutations;
 public class ExcursionMutation
 {
     [GraphQLName("create")]
-    public async Task<IdResponse> CreateAsync(
+    public async Task<CreateExcursionResponse> CreateAsync(
         [GqlClaimsPrincipal] ClaimsPrincipal claimsPrincipal,
         [Service] IMediator mediator,
         CreateExcursionRequest request)

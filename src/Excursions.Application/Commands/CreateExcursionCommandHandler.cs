@@ -12,9 +12,9 @@ public record CreateExcursionCommand(
     DateTime DateTimeUtc,
     int PlacesCount,
     decimal? PricePerPlace,
-    string GuideId) : IRequest<IdResponse>;
+    string GuideId) : IRequest<CreateExcursionResponse>;
 
-public class CreateExcursionCommandHandler : IRequestHandler<CreateExcursionCommand, IdResponse>
+public class CreateExcursionCommandHandler : IRequestHandler<CreateExcursionCommand, CreateExcursionResponse>
 {
     private readonly IDataExecutionContext _dataExecutionContext;
 
@@ -23,7 +23,7 @@ public class CreateExcursionCommandHandler : IRequestHandler<CreateExcursionComm
         _dataExecutionContext = dataExecutionContext;
     }
     
-    public async Task<IdResponse> Handle(CreateExcursionCommand command, CancellationToken cancellationToken)
+    public async Task<CreateExcursionResponse> Handle(CreateExcursionCommand command, CancellationToken cancellationToken)
     {
         return await _dataExecutionContext.ExecuteWithTransactionAsync(
             async repositories =>
@@ -38,7 +38,7 @@ public class CreateExcursionCommandHandler : IRequestHandler<CreateExcursionComm
 
                 await repositories.Excursion.CreateAsync(excursion, cancellationToken);
 
-                return new IdResponse { Id = excursion.Id };
+                return new CreateExcursionResponse { Id = excursion.Id };
             },
             IsolationLevel.Snapshot,
             cancellationToken);
