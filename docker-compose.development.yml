@@ -38,23 +38,45 @@ services:
     container_name: postgres
     ports:
       - 5432:5432
+    volumes:
+      - ./:/docker-entrypoint-initdb.d
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
-      POSTGRES_DB: excursions-database
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
     
-  migrator:
+  excursions-migrator:
     build:
       context: .
       target: migrator
-    container_name: migrator
+    container_name: excursions-migrator
     depends_on:
       postgres:
         condition: service_healthy
     environment:
       ConnectionStrings__ExcursionsDatabase: User ID=postgres;Password=postgres;Host=postgres;Port=5432;Database=excursions-database;
+
+  auth-migrator:
+    image: local/auth_migrator:latest
+    container_name: auth-migrator
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__AuthDatabase: User ID=postgres;Password=postgres;Host=postgres;Port=5432;Database=auth-database;
+
+  auth-services:
+    image: local/auth_services:latest
+    container_name: auth-services
+    depends_on:
+      - auth-migrator
+    ports:
+      - 8010:80
+    environment:
+      ConnectionStrings__AuthDatabase: User ID=postgres;Password=postgres;Host=postgres;Port=5432;Database=auth-database;
+      Events__BootstrapServers: 127.0.0.1:9092
+      ASPNETCORE_ENVIRONMENT: Development

@@ -16,6 +16,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             ValidateAudience = false
         };
+
+        if (builder.Environment.IsDevelopment())
+            options.RequireHttpsMetadata = false;
     });
 
 builder.Services.AddAuthorization(options =>
@@ -41,6 +44,12 @@ builder.Services.AddHealthChecks()
         ?? throw new InvalidOperationException("Connection string is not configured."));
 
 var app = builder.Build();
+if (!builder.Environment.IsDevelopment())
+{
+    app.UseHsts();
+    app.UseHttpsRedirection();
+}
+
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
