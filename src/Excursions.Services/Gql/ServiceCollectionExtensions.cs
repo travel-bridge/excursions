@@ -12,9 +12,19 @@ public static class ServiceCollectionExtensions
             .AddGraphQLServer()
             .AddAuthorization()
             .AddQueryType<RootQuery>()
-            .AddMutationType<RootMutation>();
+            .AddMutationType<RootMutation>()
+            .UseExceptions()
+            .UseTimeout()
+            .UseDocumentCache()
+            .UseDocumentParser()
+            .UseDocumentValidation()
+            .UseOperationCache()
+            .UseOperationResolver()
+            .UseOperationVariableCoercion()
+            .UseOperationExecution();
 
         services.AddErrorFilter<GqlErrorFilter>();
+        services.AddHttpResultSerializer<GqlHttpResultSerializer>();
         
         return services;
     }
