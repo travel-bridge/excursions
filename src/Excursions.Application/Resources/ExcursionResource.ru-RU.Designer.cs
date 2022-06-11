@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Excursions.Api.Resources {
+namespace Excursions.Application.Resources {
     using System;
     
     
