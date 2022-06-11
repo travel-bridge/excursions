@@ -1,4 +1,4 @@
-namespace Excursions.Application.Requests;
+namespace Excursions.Api.Gql.Schema.Requests;
 
 public class CreateExcursionRequest
 {

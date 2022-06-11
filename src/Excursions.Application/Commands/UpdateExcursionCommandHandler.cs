@@ -1,5 +1,4 @@
 using System.Data;
-using Excursions.Application.Responses;
 using Excursions.Domain.Aggregates;
 using Excursions.Domain.Exceptions;
 using MediatR;
@@ -10,12 +9,14 @@ public record UpdateExcursionCommand(
     int Id,
     string? Name,
     string? Description,
+    bool IsDescriptionHasValue,
     DateTime? DateTimeUtc,
     int? PlacesCount,
     decimal? PricePerPlace,
-    string GuideId) : IRequest<OperationResponse>;
+    bool IsPricePerPlaceHasValue,
+    string GuideId) : IRequest;
 
-public class UpdateExcursionCommandHandler : IRequestHandler<UpdateExcursionCommand, OperationResponse>
+public class UpdateExcursionCommandHandler : AsyncRequestHandler<UpdateExcursionCommand>
 {
     private readonly IDataExecutionContext _dataExecutionContext;
 
@@ -24,9 +25,9 @@ public class UpdateExcursionCommandHandler : IRequestHandler<UpdateExcursionComm
         _dataExecutionContext = dataExecutionContext;
     }
 
-    public async Task<OperationResponse> Handle(UpdateExcursionCommand command, CancellationToken cancellationToken)
+    protected override async Task Handle(UpdateExcursionCommand command, CancellationToken cancellationToken)
     {
-        return await _dataExecutionContext.ExecuteWithTransactionAsync(
+        await _dataExecutionContext.ExecuteWithTransactionAsync(
             async repositories =>
             {
                 var excursion = await repositories.Excursion.GetByIdAsync(command.Id, cancellationToken);
@@ -39,13 +40,13 @@ public class UpdateExcursionCommandHandler : IRequestHandler<UpdateExcursionComm
                 excursion.Update(
                     command.Name,
                     command.Description,
+                    command.IsDescriptionHasValue,
                     command.DateTimeUtc,
                     command.PlacesCount,
-                    command.PricePerPlace);
+                    command.PricePerPlace,
+                    command.IsPricePerPlaceHasValue);
 
                 await repositories.Excursion.UpdateAsync(excursion, cancellationToken);
-
-                return new OperationResponse { IsSuccess = true };
             },
             IsolationLevel.Snapshot,
             cancellationToken);

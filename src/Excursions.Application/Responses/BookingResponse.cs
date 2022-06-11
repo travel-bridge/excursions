@@ -8,7 +8,7 @@ public class BookingResponse
 
     public int ExcursionId { get; init; }
 
-    public string ExcursionName { get; set; } = null!;
+    public string ExcursionName { get; init; } = null!;
 
     public DateTime ExcursionDateTimeUtc { get; init; }
 }

@@ -1,14 +1,12 @@
 using System.Data;
-using Excursions.Application.Responses;
 using Excursions.Domain.Aggregates;
 using MediatR;
 
 namespace Excursions.Application.Commands;
 
-public record RejectFirstExpiredBookingCommand : IRequest<OperationResponse>;
+public record RejectFirstExpiredBookingCommand : IRequest<bool>;
 
-public class RejectFirstExpiredBookingCommandHandler
-    : IRequestHandler<RejectFirstExpiredBookingCommand, OperationResponse>
+public class RejectFirstExpiredBookingCommandHandler : IRequestHandler<RejectFirstExpiredBookingCommand, bool>
 {
     private const double BookingExpirationMinutes = 10;
     
@@ -19,7 +17,7 @@ public class RejectFirstExpiredBookingCommandHandler
         _dataExecutionContext = dataExecutionContext;
     }
     
-    public async Task<OperationResponse> Handle(
+    public async Task<bool> Handle(
         RejectFirstExpiredBookingCommand command,
         CancellationToken cancellationToken)
     {
@@ -29,13 +27,13 @@ public class RejectFirstExpiredBookingCommandHandler
                 var expirationDateTimeUtc = DateTime.UtcNow.AddMinutes(-BookingExpirationMinutes);
                 var booking = await repositories.Booking.GetFirstExpiredAsync(expirationDateTimeUtc);
                 if (booking == null)
-                    return new OperationResponse { IsSuccess = false };
+                    return false;
                 
                 booking.Reject();
 
                 await repositories.Booking.UpdateAsync(booking, cancellationToken);
 
-                return new OperationResponse { IsSuccess = true };
+                return true;
             },
             IsolationLevel.Serializable,
             cancellationToken);

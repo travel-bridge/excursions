@@ -1,14 +1,13 @@
 using System.Data;
-using Excursions.Application.Responses;
 using Excursions.Domain.Aggregates;
 using Excursions.Domain.Exceptions;
 using MediatR;
 
 namespace Excursions.Application.Commands;
 
-public record PublishExcursionCommand(int Id, string GuideId) : IRequest<OperationResponse>;
+public record PublishExcursionCommand(int Id, string GuideId) : IRequest;
 
-public class PublishExcursionCommandHandler : IRequestHandler<PublishExcursionCommand, OperationResponse>
+public class PublishExcursionCommandHandler : AsyncRequestHandler<PublishExcursionCommand>
 {
     private readonly IDataExecutionContext _dataExecutionContext;
 
@@ -17,9 +16,9 @@ public class PublishExcursionCommandHandler : IRequestHandler<PublishExcursionCo
         _dataExecutionContext = dataExecutionContext;
     }
     
-    public async Task<OperationResponse> Handle(PublishExcursionCommand command, CancellationToken cancellationToken)
+    protected override async Task Handle(PublishExcursionCommand command, CancellationToken cancellationToken)
     {
-        return await _dataExecutionContext.ExecuteWithTransactionAsync(
+        await _dataExecutionContext.ExecuteWithTransactionAsync(
             async repositories =>
             {
                 var excursion = await repositories.Excursion.GetByIdAsync(command.Id, cancellationToken);
@@ -32,8 +31,6 @@ public class PublishExcursionCommandHandler : IRequestHandler<PublishExcursionCo
                 excursion.Publish();
 
                 await repositories.Excursion.UpdateAsync(excursion, cancellationToken);
-
-                return new OperationResponse { IsSuccess = true };
             },
             IsolationLevel.Snapshot,
             cancellationToken);

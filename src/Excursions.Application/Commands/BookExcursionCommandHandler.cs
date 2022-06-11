@@ -1,15 +1,14 @@
 using System.Data;
 using Excursions.Application.IntegrationEvents;
-using Excursions.Application.Responses;
 using Excursions.Domain.Aggregates;
 using Excursions.Domain.Exceptions;
 using MediatR;
 
 namespace Excursions.Application.Commands;
 
-public record BookExcursionCommand(int Id, string TouristId) : IRequest<OperationResponse>;
+public record BookExcursionCommand(int Id, string TouristId) : IRequest;
 
-public class BookExcursionCommandHandler : IRequestHandler<BookExcursionCommand, OperationResponse>
+public class BookExcursionCommandHandler : AsyncRequestHandler<BookExcursionCommand>
 {
     private readonly IDataExecutionContext _dataExecutionContext;
     private readonly IEventProducer _eventProducer;
@@ -20,9 +19,9 @@ public class BookExcursionCommandHandler : IRequestHandler<BookExcursionCommand,
         _eventProducer = eventProducer;
     }
     
-    public async Task<OperationResponse> Handle(BookExcursionCommand command, CancellationToken cancellationToken)
+    protected override async Task Handle(BookExcursionCommand command, CancellationToken cancellationToken)
     {
-        return await _dataExecutionContext.ExecuteWithTransactionAsync(
+        await _dataExecutionContext.ExecuteWithTransactionAsync(
             async repositories =>
             {
                 var excursion = await repositories.Excursion.GetByIdAsync(command.Id, cancellationToken);
@@ -39,8 +38,6 @@ public class BookExcursionCommandHandler : IRequestHandler<BookExcursionCommand,
                     await _eventProducer.ProduceAsync(
                         new PaidExcursionBookedIntegrationEvent(booking.Id, booking.TouristId),
                         cancellationToken);
-                
-                return new OperationResponse { IsSuccess = true };
             },
             IsolationLevel.Serializable,
             cancellationToken);

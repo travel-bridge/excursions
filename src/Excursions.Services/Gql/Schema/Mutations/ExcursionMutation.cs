@@ -1,8 +1,9 @@
 using System.Security.Claims;
 using Excursions.Api.Gql.Infrastructure;
+using Excursions.Api.Gql.Schema.Requests;
+using Excursions.Api.Gql.Schema.Responses;
 using Excursions.Api.Infrastructure;
 using Excursions.Application.Commands;
-using Excursions.Application.Requests;
 using Excursions.Application.Responses;
 using MediatR;
 
@@ -24,8 +25,9 @@ public class ExcursionMutation
             request.PlacesCount,
             request.PricePerPlace,
             guideId);
-        var response = await mediator.Send(command);
-        return response;
+        var id = await mediator.Send(command);
+        
+        return new CreateExcursionResponse { Id = id };
     }
     
     [GraphQLName("update")]
@@ -39,12 +41,15 @@ public class ExcursionMutation
             request.Id,
             request.Name,
             request.Description,
+            request.Description.HasValue,
             request.DateTimeUtc,
             request.PlacesCount,
             request.PricePerPlace,
+            request.PricePerPlace.HasValue,
             guideId);
-        var response = await mediator.Send(command);
-        return response;
+        await mediator.Send(command);
+
+        return OperationResponse.Success;
     }
 
     [GraphQLName("publish")]
@@ -55,8 +60,9 @@ public class ExcursionMutation
     {
         var guideId = claimsPrincipal.GetUserId();
         var command = new PublishExcursionCommand(id, guideId);
-        var response = await mediator.Send(command);
-        return response;
+        await mediator.Send(command);
+        
+        return OperationResponse.Success;
     }
     
     [GraphQLName("book")]
@@ -67,7 +73,8 @@ public class ExcursionMutation
     {
         var touristId = claimsPrincipal.GetUserId();
         var command = new BookExcursionCommand(id, touristId);
-        var response = await mediator.Send(command);
-        return response;
+        await mediator.Send(command);
+        
+        return OperationResponse.Success;
     }
 }

@@ -34,8 +34,7 @@ public class RejectExpiredBookingWorker : WorkerBase
                     do
                     {
                         var command = new RejectFirstExpiredBookingCommand();
-                        var response = await mediator.Send(command, stoppingToken);
-                        isRejected = response.IsSuccess;
+                        isRejected = await mediator.Send(command, stoppingToken);
                     }
                     while (isRejected);
                 },

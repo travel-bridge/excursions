@@ -1,14 +1,13 @@
 using System.Data;
-using Excursions.Application.Responses;
 using Excursions.Domain.Aggregates;
 using Excursions.Domain.Exceptions;
 using MediatR;
 
 namespace Excursions.Application.Commands;
 
-public record ApproveBookingCommand(int Id) : IRequest<OperationResponse>;
+public record ApproveBookingCommand(int Id) : IRequest;
 
-public class ApproveBookingCommandHandler : IRequestHandler<ApproveBookingCommand, OperationResponse>
+public class ApproveBookingCommandHandler : AsyncRequestHandler<ApproveBookingCommand>
 {
     private readonly IDataExecutionContext _dataExecutionContext;
 
@@ -17,9 +16,9 @@ public class ApproveBookingCommandHandler : IRequestHandler<ApproveBookingComman
         _dataExecutionContext = dataExecutionContext;
     }
     
-    public async Task<OperationResponse> Handle(ApproveBookingCommand command, CancellationToken cancellationToken)
+    protected override async Task Handle(ApproveBookingCommand command, CancellationToken cancellationToken)
     {
-        return await _dataExecutionContext.ExecuteWithTransactionAsync(
+        await _dataExecutionContext.ExecuteWithTransactionAsync(
             async repositories =>
             {
                 var booking = await repositories.Booking.GetByIdAsync(command.Id, cancellationToken);
@@ -29,8 +28,6 @@ public class ApproveBookingCommandHandler : IRequestHandler<ApproveBookingComman
                 booking.Approve();
 
                 await repositories.Booking.UpdateAsync(booking, cancellationToken);
-
-                return new OperationResponse { IsSuccess = true };
             },
             IsolationLevel.Snapshot,
             cancellationToken);
