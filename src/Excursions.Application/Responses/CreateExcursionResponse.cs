@@ -1,4 +1,4 @@
-namespace Excursions.Api.Gql.Schema.Responses;
+namespace Excursions.Application.Responses;
 
 public class CreateExcursionResponse
 {

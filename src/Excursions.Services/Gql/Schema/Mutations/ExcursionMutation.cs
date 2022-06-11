@@ -1,7 +1,6 @@
 using System.Security.Claims;
 using Excursions.Api.Gql.Infrastructure;
 using Excursions.Api.Gql.Schema.Requests;
-using Excursions.Api.Gql.Schema.Responses;
 using Excursions.Api.Infrastructure;
 using Excursions.Application.Commands;
 using Excursions.Application.Responses;
@@ -25,9 +24,9 @@ public class ExcursionMutation
             request.PlacesCount,
             request.PricePerPlace,
             guideId);
-        var id = await mediator.Send(command);
-        
-        return new CreateExcursionResponse { Id = id };
+        var response = await mediator.Send(command);
+
+        return response;
     }
     
     [GraphQLName("update")]
