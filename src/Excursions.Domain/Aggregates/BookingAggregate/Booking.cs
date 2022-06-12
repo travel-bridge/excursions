@@ -6,12 +6,12 @@ public class Booking : EntityBase<int>, IAggregateRoot
 {
     private static readonly BookingValidator Validator = new();
     
-    protected Booking(int excursionId, string touristId)
+    protected Booking(int excursionId, string touristId, BookingStatus status, DateTime createDateTimeUtc)
     {
         ExcursionId = excursionId;
         TouristId = touristId;
-        Status = BookingStatus.Booked;
-        CreateDateTimeUtc = DateTime.UtcNow;
+        Status = status;
+        CreateDateTimeUtc = createDateTimeUtc;
     }
     
     public int ExcursionId { get; private set; }
@@ -26,7 +26,7 @@ public class Booking : EntityBase<int>, IAggregateRoot
 
     public static Booking Create(int excursionId, string touristId)
     {
-        var booking = new Booking(excursionId, touristId);
+        var booking = new Booking(excursionId, touristId, BookingStatus.Booked, DateTime.UtcNow);
         Validator.ValidateEntityAndThrow(booking);
         return booking;
     }

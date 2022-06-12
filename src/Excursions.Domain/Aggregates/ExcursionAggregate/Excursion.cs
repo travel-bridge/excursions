@@ -13,7 +13,9 @@ public class Excursion : EntityBase<int>, IAggregateRoot
         DateTime dateTimeUtc,
         int placesCount,
         decimal? pricePerPlace,
-        string guideId)
+        string guideId,
+        ExcursionStatus excursionStatus,
+        DateTime createDateTimeUtc)
     {
         Name = name;
         Description = description;
@@ -21,8 +23,8 @@ public class Excursion : EntityBase<int>, IAggregateRoot
         PlacesCount = placesCount;
         PricePerPlace = pricePerPlace;
         GuideId = guideId;
-        Status = ExcursionStatus.Draft;
-        CreateDateTimeUtc = DateTime.UtcNow;
+        Status = excursionStatus;
+        CreateDateTimeUtc = createDateTimeUtc;
     }
     
     public string Name { get; private set; }
@@ -56,7 +58,15 @@ public class Excursion : EntityBase<int>, IAggregateRoot
         decimal? pricePerPlace,
         string guideId)
     {
-        var excursion = new Excursion(name, description, dateTimeUtc, placesCount, pricePerPlace, guideId);
+        var excursion = new Excursion(
+            name,
+            description,
+            dateTimeUtc,
+            placesCount,
+            pricePerPlace,
+            guideId,
+            ExcursionStatus.Draft,
+            DateTime.UtcNow);
         Validator.ValidateEntityAndThrow(excursion);
         return excursion;
     }
