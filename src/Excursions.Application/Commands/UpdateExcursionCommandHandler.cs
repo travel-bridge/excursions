@@ -8,10 +8,10 @@ namespace Excursions.Application.Commands;
 public record UpdateExcursionCommand(
     int Id,
     string? Name,
-    Optional<string> Description,
+    Optional<string?> Description,
     DateTime? DateTimeUtc,
     int? PlacesCount,
-    Optional<decimal> PricePerPlace,
+    Optional<decimal?> PricePerPlace,
     string GuideId) : IRequest;
 
 public class UpdateExcursionCommandHandler : AsyncRequestHandler<UpdateExcursionCommand>

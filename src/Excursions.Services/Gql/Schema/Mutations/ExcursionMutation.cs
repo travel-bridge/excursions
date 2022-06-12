@@ -39,10 +39,10 @@ public class ExcursionMutation
         var command = new UpdateExcursionCommand(
             request.Id,
             request.Name,
-            new Domain.Aggregates.Optional<string>(request.Description, request.Description.HasValue),
+            new Domain.Aggregates.Optional<string?>(request.Description, request.Description.HasValue),
             request.DateTimeUtc,
             request.PlacesCount,
-            new Domain.Aggregates.Optional<decimal>(request.PricePerPlace, request.PricePerPlace.HasValue),
+            new Domain.Aggregates.Optional<decimal?>(request.PricePerPlace, request.PricePerPlace.HasValue),
         guideId);
         await mediator.Send(command);
 

@@ -73,10 +73,10 @@ public class Excursion : EntityBase<int>, IAggregateRoot
     
     public void Update(
         string? name,
-        Optional<string> description,
+        Optional<string?> description,
         DateTime? dateTimeUtc,
         int? placesCount,
-        Optional<decimal> pricePerPlace)
+        Optional<decimal?> pricePerPlace)
     {
         if (Status != ExcursionStatus.Draft)
             throw new DomainException("Domain:ExcursionUpdateWhenNotDraftError");

@@ -6,11 +6,11 @@ public class UpdateExcursionRequest
     
     public string? Name { get; init; }
 
-    public Optional<string> Description { get; init; }
+    public Optional<string?> Description { get; init; }
 
     public DateTime? DateTimeUtc { get; init; }
 
     public int? PlacesCount { get; init; }
 
-    public Optional<decimal> PricePerPlace { get; init; }
+    public Optional<decimal?> PricePerPlace { get; init; }
 }
