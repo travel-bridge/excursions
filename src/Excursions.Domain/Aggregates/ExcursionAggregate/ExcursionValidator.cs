@@ -5,7 +5,7 @@ namespace Excursions.Domain.Aggregates.ExcursionAggregate;
 
 internal class ExcursionValidator : AbstractValidator<Excursion>
 {
-    private static readonly string[] Location = { "excursion" };
+    private static readonly string[] Location = { "request" };
     
     public ExcursionValidator()
     {
