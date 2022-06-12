@@ -8,12 +8,10 @@ namespace Excursions.Application.Commands;
 public record UpdateExcursionCommand(
     int Id,
     string? Name,
-    string? Description,
-    bool IsDescriptionHasValue,
+    Optional<string> Description,
     DateTime? DateTimeUtc,
     int? PlacesCount,
-    decimal? PricePerPlace,
-    bool IsPricePerPlaceHasValue,
+    Optional<decimal> PricePerPlace,
     string GuideId) : IRequest;
 
 public class UpdateExcursionCommandHandler : AsyncRequestHandler<UpdateExcursionCommand>
@@ -40,11 +38,9 @@ public class UpdateExcursionCommandHandler : AsyncRequestHandler<UpdateExcursion
                 excursion.Update(
                     command.Name,
                     command.Description,
-                    command.IsDescriptionHasValue,
                     command.DateTimeUtc,
                     command.PlacesCount,
-                    command.PricePerPlace,
-                    command.IsPricePerPlaceHasValue);
+                    command.PricePerPlace);
 
                 await repositories.Excursion.UpdateAsync(excursion, cancellationToken);
             },

@@ -63,12 +63,10 @@ public class Excursion : EntityBase<int>, IAggregateRoot
     
     public void Update(
         string? name,
-        string? description,
-        bool isDescriptionHasValue,
+        Optional<string> description,
         DateTime? dateTimeUtc,
         int? placesCount,
-        decimal? pricePerPlace,
-        bool isPricePerPlaceHasValue)
+        Optional<decimal> pricePerPlace)
     {
         if (Status != ExcursionStatus.Draft)
             throw new DomainException("Domain:ExcursionUpdateWhenNotDraftError");
@@ -76,8 +74,8 @@ public class Excursion : EntityBase<int>, IAggregateRoot
         if (name is not null)
             Name = name;
 
-        if (isDescriptionHasValue)
-            Description = description;
+        if (description.HasValue)
+            Description = description.Value;
 
         if (dateTimeUtc.HasValue)
             DateTimeUtc = dateTimeUtc.Value;
@@ -85,8 +83,8 @@ public class Excursion : EntityBase<int>, IAggregateRoot
         if (placesCount.HasValue)
             PlacesCount = placesCount.Value;
 
-        if (isPricePerPlaceHasValue)
-            PricePerPlace = pricePerPlace;
+        if (pricePerPlace.HasValue)
+            PricePerPlace = pricePerPlace.Value;
 
         UpdateDateTimeUtc = DateTime.UtcNow;
         
