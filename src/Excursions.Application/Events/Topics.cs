@@ -1,4 +1,4 @@
-namespace Excursions.Application.IntegrationEvents;
+namespace Excursions.Application.Events;
 
 public static class Topics
 {

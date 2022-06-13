@@ -1,4 +1,4 @@
-using Excursions.Application.IntegrationEvents;
+using Excursions.Application.Events;
 using Excursions.Domain.Aggregates;
 using Excursions.Infrastructure.Database;
 using Excursions.Infrastructure.Events;

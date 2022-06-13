@@ -1,5 +1,5 @@
 using Excursions.Application.Commands;
-using Excursions.Application.IntegrationEvents;
+using Excursions.Application.Events;
 using Excursions.Application.Resources;
 using MediatR;
 using Microsoft.Extensions.Localization;
@@ -38,7 +38,7 @@ public class ApprovePaidBookingWorker : WorkerBase
             await ExecuteSafelyAsync(
                 async () =>
                 {
-                    await eventConsumer.ConsumeAndHandleAsync<PaidExcursionBookingApprovedIntegrationEvent>(
+                    await eventConsumer.ConsumeAndHandleAsync<PaidExcursionBookingApprovedEvent>(
                         async @event => await mediator.Send(
                             new ApproveBookingCommand(@event.BookingId),
                             stoppingToken),

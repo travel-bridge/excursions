@@ -1,5 +1,5 @@
 using System.Data;
-using Excursions.Application.IntegrationEvents;
+using Excursions.Application.Events;
 using Excursions.Domain.Aggregates;
 using Excursions.Domain.Exceptions;
 using MediatR;
@@ -36,7 +36,7 @@ public class BookExcursionCommandHandler : AsyncRequestHandler<BookExcursionComm
 
                 if (!excursion.IsFree())
                     await _eventProducer.ProduceAsync(
-                        new PaidExcursionBookedIntegrationEvent(booking.Id, booking.TouristId),
+                        new PaidExcursionBookedEvent(booking.Id, booking.TouristId),
                         cancellationToken);
             },
             IsolationLevel.Serializable,

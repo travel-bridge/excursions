@@ -1,5 +1,5 @@
 using Confluent.Kafka;
-using Excursions.Application.IntegrationEvents;
+using Excursions.Application.Events;
 using Microsoft.Extensions.Options;
 
 namespace Excursions.Infrastructure.Events;
